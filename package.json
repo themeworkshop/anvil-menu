@@ -1,0 +1,37 @@
+{
+  "name": "@themeworkshop/anvil-menu",
+  "version": "0.1.0",
+  "description": "A menu component for Anvil",
+  "main": "dist/anvil-menu",
+  "dependencies": {},
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-jest": "^23.2.0",
+    "babel-plugin-external-helpers": "^6.22.0",
+    "babel-preset-env": "^1.7.0",
+    "eslint": "^4.19.1",
+    "fitvids": "^2.0.0",
+    "jest": "^22.4.4",
+    "prettier": "^1.13.7",
+    "rollup": "^0.59.4",
+    "rollup-plugin-babel": "^3.0.7",
+    "rollup-plugin-terser": "^1.0.1"
+  },
+  "scripts": {
+    "start": "npm run dev",
+    "build": "node ./scripts/build.js",
+    "dev": "node ./node_modules/rollup/bin/rollup -c ./scripts/dev.js -w",
+    "test": "node ./node_modules/jest/bin/jest.js",
+    "coverage": "node ./node_modules/jest/bin/jest.js --coverage"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/themeworkshop/anvil-menu.git"
+  },
+  "author": "Craig Morrison <craig@doublethink.net>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/themeworkshop/anvil-menu/issues"
+  },
+  "homepage": "https://github.com/themeworkshop/anvil-menu#readme"
+}
