@@ -9,7 +9,7 @@ const entryFile = 'src/anvil-menu.js';
 const configs = [
   {
     name: 'AnvilMenu',
-    format: 'iife',
+    format: 'umd',
     fileName: 'anvil-menu',
     fileExt: '.js',
     plugins: [

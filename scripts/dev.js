@@ -5,7 +5,7 @@ export default {
   output: {
     name: 'AnvilMenu',
     file: './tmp/anvil-menu.js',
-    format: 'cjs',
+    format: 'umd',
     target: 'es5',
     sourcemap: 'inline'
   },
