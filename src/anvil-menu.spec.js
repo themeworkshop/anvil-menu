@@ -60,8 +60,13 @@ describe('Menu', () => {
   describe('parent menu', () => {
     it('should be closed on load', () => {
       const list = document.querySelector('.tw-menu > [data-menu="primary"]');
+      const button = document.querySelector('.tw-menu > .tw-menu__button');
 
-      expect(list.getAttribute('hidden')).toEqual('hidden');
+      // Expect that the menu is hidden
+      expect(list.getAttribute('hidden')).toBe('hidden');
+
+      // Expect button class to be updated correctly
+      expect(button.classList.contains('menu-closed')).toBe(true);
     });
 
     it('should open after being clicked when closed', () => {
@@ -69,7 +74,12 @@ describe('Menu', () => {
       const button = document.querySelector('.tw-menu > .tw-menu__button');
 
       button.click();
-      expect(list.getAttribute('hidden')).toEqual(null);
+
+      // Expect that the menu is open
+      expect(list.getAttribute('hidden')).toBeNull();
+
+      // Expect button class to be updated correctly
+      expect(button.classList.contains('menu-open')).toBe(true);
     });
 
     it('should close after being clicked when open', () => {
@@ -77,10 +87,15 @@ describe('Menu', () => {
       const button = document.querySelector('.tw-menu > .tw-menu__button');
 
       button.click();
-      expect(list.getAttribute('hidden')).toEqual(null);
+      expect(list.getAttribute('hidden')).toBeNull();
 
       button.click();
-      expect(list.getAttribute('hidden')).toEqual('hidden');
+
+      // Expect that the menu is hidden
+      expect(list.getAttribute('hidden')).toBe('hidden');
+
+      // Expect button class to be updated correctly
+      expect(button.classList.contains('menu-closed')).toBe(true);
     });
 
     it('should close the child lists belonging to it when closed', () => {
@@ -93,27 +108,35 @@ describe('Menu', () => {
 
       // Open the main menu
       button.click();
-      expect(list.getAttribute('hidden')).toEqual(null);
-      expect(childList.getAttribute('hidden')).toEqual('hidden');
+      expect(list.getAttribute('hidden')).toBeNull();
+      expect(childList.getAttribute('hidden')).toBe('hidden');
 
       // Open the sub-menu
       childButton.click();
-      expect(childList.getAttribute('hidden')).toEqual(null);
+      expect(childList.getAttribute('hidden')).toBeNull();
 
       // Close the main menu
       button.click();
 
-      // Check that both menus are closed
-      expect(list.getAttribute('hidden')).toEqual('hidden');
-      expect(childList.getAttribute('hidden')).toEqual('hidden');
+      // Expect that both menus are closed
+      expect(list.getAttribute('hidden')).toBe('hidden');
+      expect(childList.getAttribute('hidden')).toBe('hidden');
+
+      // Expect button class to be updated correctly
+      expect(button.classList.contains('menu-closed')).toBe(true);
     });
   });
 
   describe('child menu', () => {
     it('should be closed on load', () => {
       const list = document.querySelector('.tw-menu > .tw-menu__list');
+      const button = list.parentElement.querySelector('button');
 
-      expect(list.getAttribute('hidden')).toEqual('hidden');
+      // Expect hidden state to be updated correctly
+      expect(list.getAttribute('hidden')).toBe('hidden');
+
+      // Expect button class to be updated correctly
+      expect(button.classList.contains('menu-closed')).toBe(true);
     });
 
     it('should open after being clicked when closed', () => {
@@ -121,7 +144,12 @@ describe('Menu', () => {
       const button = list.parentElement.querySelector('button');
 
       button.click();
-      expect(list.getAttribute('hidden')).toEqual(null);
+
+      // Expect hidden state to be updated correctly
+      expect(list.getAttribute('hidden')).toBeNull();
+
+      // Expect button class to be updated correctly
+      expect(button.classList.contains('menu-open')).toBe(true);
     });
 
     it('should close after being clicked when open', () => {
@@ -129,21 +157,33 @@ describe('Menu', () => {
       const button = list.parentElement.querySelector('button');
 
       button.click();
-      expect(list.getAttribute('hidden')).toEqual(null);
+      expect(list.getAttribute('hidden')).toBeNull();
 
       button.click();
-      expect(list.getAttribute('hidden')).toEqual('hidden');
+
+      // Expect hidden state to be updated correctly
+      expect(list.getAttribute('hidden')).toBe('hidden');
+
+      // Expect button class to be updated correctly
+      expect(button.classList.contains('menu-closed')).toBe(true);
     });
 
     it('should close other child menus when opened', () => {
       const childLists = document.querySelectorAll(
         '.tw-menu [data-menu="secondary"]'
       );
-      const childButton = childLists[1].parentElement.querySelector('button');
+      const childButton0 = childLists[0].parentElement.querySelector('button');
+      const childButton1 = childLists[1].parentElement.querySelector('button');
 
-      childButton.click();
-      expect(childLists[0].getAttribute('hidden')).toEqual('hidden');
-      expect(childLists[1].getAttribute('hidden')).toEqual(null);
+      childButton1.click();
+
+      // Expect hidden states to be updated correctly
+      expect(childLists[0].getAttribute('hidden')).toBe('hidden');
+      expect(childLists[1].getAttribute('hidden')).toBeNull();
+
+      // Expect button classes to be updated correctly
+      expect(childButton0.classList.contains('menu-closed')).toBe(true);
+      expect(childButton1.classList.contains('menu-open')).toBe(true);
     });
   });
 });

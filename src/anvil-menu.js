@@ -14,8 +14,8 @@ class AnvilMenu {
       const list = button.parentElement.querySelector(
         '[data-menu="primary"], [data-menu="secondary"]'
       );
-      button.addEventListener('click', () => this.toggle(list));
-      this.collapse(list);
+      button.addEventListener('click', () => this.toggle(list, button));
+      this.collapse(list, button);
     });
   }
 
@@ -29,18 +29,24 @@ class AnvilMenu {
     el.setAttribute('aria-expanded', 'true');
   }
 
-  collapse(el) {
-    if (el.dataset.menu === 'primary') {
+  collapse(targetList, targetButton) {
+    if (targetList.dataset.menu === 'primary') {
       this.lists.forEach(list => {
         this.hideElement(list);
       });
+      this.buttons.forEach(button => {
+        button.classList.replace('menu-open', 'menu-closed');
+      });
     } else {
-      this.hideElement(el);
+      this.hideElement(targetList);
     }
+
+    targetButton.classList.add('menu-closed');
+    targetButton.classList.remove('menu-open');
   }
 
-  expand(el) {
-    if (el.dataset.menu === 'secondary') {
+  expand(targetList, targetButton) {
+    if (targetList.dataset.menu === 'secondary') {
       const secondaryLists = this.root.querySelectorAll(
         '[data-menu="secondary"]'
       );
@@ -50,15 +56,17 @@ class AnvilMenu {
       });
     }
 
-    el.removeAttribute('hidden');
-    el.setAttribute('aria-expanded', 'true');
+    targetButton.classList.add('menu-open');
+    targetButton.classList.remove('menu-closed');
+    targetList.removeAttribute('hidden');
+    targetList.setAttribute('aria-expanded', 'true');
   }
 
-  toggle(el) {
-    if (el.getAttribute('aria-expanded') === 'true') {
-      this.collapse(el);
+  toggle(targetList, targetButton) {
+    if (targetList.getAttribute('aria-expanded') === 'true') {
+      this.collapse(targetList, targetButton);
     } else {
-      this.expand(el);
+      this.expand(targetList, targetButton);
     }
   }
 }
