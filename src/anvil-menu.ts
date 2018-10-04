@@ -1,7 +1,16 @@
+interface ComponentConfig {
+  index: number;
+  element: Element;
+}
 class AnvilMenu {
-  constructor(index, root) {
-    this.root = root;
-    this.index = index;
+  root: Element;
+  index: number;
+  buttons: NodeListOf<HTMLButtonElement>;
+  lists: NodeListOf<HTMLElement>;
+
+  constructor(config: ComponentConfig) {
+    this.root = config.element;
+    this.index = config.index;
     this.buttons = this.root.querySelectorAll('[data-menu="button"]');
     this.lists = this.root.querySelectorAll(
       '[data-menu="primary"], [data-menu="secondary"]'
@@ -11,7 +20,7 @@ class AnvilMenu {
 
   load() {
     this.buttons.forEach(button => {
-      const list = button.parentElement.querySelector(
+      const list: HTMLElement = button.parentElement.querySelector(
         '[data-menu="primary"], [data-menu="secondary"]'
       );
       button.addEventListener('click', () => this.toggle(list, button));
@@ -19,17 +28,11 @@ class AnvilMenu {
     });
   }
 
-  hideElement(el) {
+  hideElement(el: HTMLElement) {
     el.setAttribute('hidden', 'hidden');
-    el.setAttribute('aria-expanded', 'false');
   }
 
-  showElement(el) {
-    el.removeAttribute('hidden');
-    el.setAttribute('aria-expanded', 'true');
-  }
-
-  collapse(targetList, targetButton) {
+  collapse(targetList: HTMLElement, targetButton: HTMLButtonElement) {
     if (targetList.dataset.menu === 'primary') {
       this.lists.forEach(list => {
         this.hideElement(list);
@@ -41,15 +44,16 @@ class AnvilMenu {
       this.hideElement(targetList);
     }
 
+    targetButton.setAttribute('aria-expanded', 'false');
     targetButton.classList.add('menu-closed');
     targetButton.classList.remove('menu-open');
   }
 
-  expand(targetList, targetButton) {
+  expand(targetList: HTMLElement, targetButton: HTMLButtonElement) {
     if (targetList.dataset.menu === 'secondary') {
       const secondaryLists = this.root.querySelectorAll(
         '[data-menu="secondary"]'
-      );
+      ) as NodeListOf<HTMLElement>;
 
       secondaryLists.forEach(list => {
         this.hideElement(list);
@@ -58,12 +62,12 @@ class AnvilMenu {
 
     targetButton.classList.add('menu-open');
     targetButton.classList.remove('menu-closed');
+    targetButton.setAttribute('aria-expanded', 'true');
     targetList.removeAttribute('hidden');
-    targetList.setAttribute('aria-expanded', 'true');
   }
 
-  toggle(targetList, targetButton) {
-    if (targetList.getAttribute('aria-expanded') === 'true') {
+  toggle(targetList: HTMLElement, targetButton: HTMLButtonElement) {
+    if (targetButton.getAttribute('aria-expanded') === 'true') {
       this.collapse(targetList, targetButton);
     } else {
       this.expand(targetList, targetButton);

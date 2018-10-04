@@ -5,11 +5,11 @@ describe('Menu', () => {
     const Fixture = `
     <header>
       <nav data-component="menu" class="tw-menu">
-        <button class="tw-menu__button" data-menu="button">Menu</button>
-        <ul class="tw-menu__list" data-menu="primary">
+        <button aria-controls="tw-menu__parentList" class="tw-menu__button" data-menu="button">Menu</button>
+        <ul id="tw-menu__parentList" class="tw-menu__list" data-menu="primary">
           <li class="tw-menu__option">
-            <button class="tw-menu__button" data-menu="button">Page 1</button>
-            <ul class="tw-menu__list" data-menu="secondary">
+            <button aria-controls="tw-menu__childList1" class="tw-menu__button" data-menu="button">Page 1</button>
+            <ul id="tw-menu__childList1" class="tw-menu__list" data-menu="secondary">
               <li>
                 <a href="#">Page 1.1</a>
               </li>
@@ -31,8 +31,8 @@ describe('Menu', () => {
             <a href="#">Page 3</a>
           </li>
           <li class="tw-menu__option">
-            <button class="tw-menu__button" data-menu="button">Page 4</button>
-            <ul class="tw-menu__list" data-menu="secondary">
+            <button aria-controls="tw-menu__childList2" class="tw-menu__button" data-menu="button">Page 4</button>
+            <ul id="tw-menu="childList2" class="tw-menu__list" data-menu="secondary">
               <li>
                 <a href="#">Page 4.1</a>
               </li>
@@ -53,8 +53,10 @@ describe('Menu', () => {
     `;
     document.body.innerHTML = Fixture;
 
-    const element = document.querySelector('[data-component="menu"]');
-    new AnvilMenu(0, element);
+    const rootElement = document.querySelector(
+      '[data-component="menu"]'
+    ) as HTMLElement;
+    new AnvilMenu({ index: 0, element: rootElement });
   });
 
   describe('parent menu', () => {
@@ -71,7 +73,9 @@ describe('Menu', () => {
 
     it('should open after being clicked when closed', () => {
       const list = document.querySelector('.tw-menu > [data-menu="primary"]');
-      const button = document.querySelector('.tw-menu > .tw-menu__button');
+      const button: HTMLButtonElement = document.querySelector(
+        '.tw-menu > .tw-menu__button'
+      );
 
       button.click();
 
@@ -84,7 +88,9 @@ describe('Menu', () => {
 
     it('should close after being clicked when open', () => {
       const list = document.querySelector('.tw-menu > [data-menu="primary"]');
-      const button = document.querySelector('.tw-menu > .tw-menu__button');
+      const button: HTMLButtonElement = document.querySelector(
+        '.tw-menu > .tw-menu__button'
+      );
 
       button.click();
       expect(list.getAttribute('hidden')).toBeNull();
@@ -100,7 +106,9 @@ describe('Menu', () => {
 
     it('should close the child lists belonging to it when closed', () => {
       const list = document.querySelector('.tw-menu [data-menu="primary"]');
-      const button = document.querySelector('.tw-menu > button');
+      const button: HTMLButtonElement = document.querySelector(
+        '.tw-menu > button'
+      );
       const childList = document.querySelector(
         '.tw-menu [data-menu="secondary"]'
       );

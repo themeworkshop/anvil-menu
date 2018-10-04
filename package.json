@@ -5,25 +5,24 @@
   "main": "dist/anvil-menu",
   "dependencies": {},
   "devDependencies": {
-    "babel-core": "^6.26.3",
-    "babel-jest": "^23.2.0",
-    "babel-plugin-external-helpers": "^6.22.0",
-    "babel-preset-env": "^1.7.0",
-    "eslint": "^4.19.1",
-    "fitvids": "^2.0.0",
-    "jest": "^22.4.4",
-    "prettier": "^1.13.7",
-    "rollup": "^0.59.4",
-    "rollup-plugin-babel": "^3.0.7",
-    "rollup-plugin-terser": "^1.0.1"
+    "@themeworkshop/anvil": "^1.1.0",
+    "@types/jest": "^23.3.2",
+    "jest": "^23.6.0",
+    "prettier": "^1.14.3",
+    "rollup": "^0.66.2",
+    "rollup-plugin-sourcemaps": "^0.4.2",
+    "rollup-plugin-terser": "^3.0.0",
+    "rollup-plugin-typescript2": "^0.17.0",
+    "ts-jest": "^23.10.3",
+    "tslint": "^5.11.0",
+    "tslint-config-prettier": "^1.15.0",
+    "typescript": "^3.1.1"
   },
   "scripts": {
-    "start": "npm run dev",
+    "start": "npm run build",
     "build": "node ./scripts/build.js",
-    "dev": "node ./node_modules/rollup/bin/rollup -c ./scripts/dev.js -w",
     "test": "node ./node_modules/jest/bin/jest.js",
-    "coverage": "node ./node_modules/jest/bin/jest.js --coverage",
-    "prepare": "npm run build"
+    "coverage": "node ./node_modules/jest/bin/jest.js --coverage"
   },
   "repository": {
     "type": "git",
