@@ -5,11 +5,11 @@ describe('Menu', () => {
     const Fixture = `
     <header>
       <nav data-component="menu" class="tw-menu">
-        <button class="tw-menu__button" data-menu="button">Menu</button>
-        <ul class="tw-menu__list" data-menu="primary">
+        <button aria-controls="tw-menu__parentList" class="tw-menu__button" data-menu="button">Menu</button>
+        <ul id="tw-menu__parentList" class="tw-menu__list" data-menu="primary">
           <li class="tw-menu__option">
-            <button class="tw-menu__button" data-menu="button">Page 1</button>
-            <ul class="tw-menu__list" data-menu="secondary">
+            <button aria-controls="tw-menu__childList1" class="tw-menu__button" data-menu="button">Page 1</button>
+            <ul id="tw-menu__childList1" class="tw-menu__list" data-menu="secondary">
               <li>
                 <a href="#">Page 1.1</a>
               </li>
@@ -31,8 +31,8 @@ describe('Menu', () => {
             <a href="#">Page 3</a>
           </li>
           <li class="tw-menu__option">
-            <button class="tw-menu__button" data-menu="button">Page 4</button>
-            <ul class="tw-menu__list" data-menu="secondary">
+            <button aria-controls="tw-menu__childList2" class="tw-menu__button" data-menu="button">Page 4</button>
+            <ul id="tw-menu="childList2" class="tw-menu__list" data-menu="secondary">
               <li>
                 <a href="#">Page 4.1</a>
               </li>

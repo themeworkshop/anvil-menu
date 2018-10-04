@@ -30,7 +30,6 @@ class AnvilMenu {
 
   hideElement(el: HTMLElement) {
     el.setAttribute('hidden', 'hidden');
-    el.setAttribute('aria-expanded', 'false');
   }
 
   collapse(targetList: HTMLElement, targetButton: HTMLButtonElement) {
@@ -45,6 +44,7 @@ class AnvilMenu {
       this.hideElement(targetList);
     }
 
+    targetButton.setAttribute('aria-expanded', 'false');
     targetButton.classList.add('menu-closed');
     targetButton.classList.remove('menu-open');
   }
@@ -62,12 +62,12 @@ class AnvilMenu {
 
     targetButton.classList.add('menu-open');
     targetButton.classList.remove('menu-closed');
+    targetButton.setAttribute('aria-expanded', 'true');
     targetList.removeAttribute('hidden');
-    targetList.setAttribute('aria-expanded', 'true');
   }
 
   toggle(targetList: HTMLElement, targetButton: HTMLButtonElement) {
-    if (targetList.getAttribute('aria-expanded') === 'true') {
+    if (targetButton.getAttribute('aria-expanded') === 'true') {
       this.collapse(targetList, targetButton);
     } else {
       this.expand(targetList, targetButton);
