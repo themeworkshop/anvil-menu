@@ -53,10 +53,10 @@ describe('Menu', () => {
     `;
     document.body.innerHTML = Fixture;
 
-    const element = document.querySelector(
+    const rootElement = document.querySelector(
       '[data-component="menu"]'
     ) as HTMLElement;
-    new AnvilMenu(0, element);
+    new AnvilMenu({ index: 0, element: rootElement });
   });
 
   describe('parent menu', () => {

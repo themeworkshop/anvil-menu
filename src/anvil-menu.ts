@@ -1,12 +1,16 @@
+interface ComponentConfig {
+  index: number;
+  element: Element;
+}
 class AnvilMenu {
-  root: HTMLElement;
+  root: Element;
   index: number;
   buttons: NodeListOf<HTMLButtonElement>;
   lists: NodeListOf<HTMLElement>;
 
-  constructor(index: number, root: HTMLElement) {
-    this.root = root;
-    this.index = index;
+  constructor(config: ComponentConfig) {
+    this.root = config.element;
+    this.index = config.index;
     this.buttons = this.root.querySelectorAll('[data-menu="button"]');
     this.lists = this.root.querySelectorAll(
       '[data-menu="primary"], [data-menu="secondary"]'
