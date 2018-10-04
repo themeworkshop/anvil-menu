@@ -1,11 +1,11 @@
-/* eslint-disable no-console */
 'use strict';
 
 const rollup = require('rollup');
-const babel = require('rollup-plugin-babel');
+const typescript = require('rollup-plugin-typescript2');
 const { terser } = require('rollup-plugin-terser');
 
-const entryFile = 'src/anvil-menu.js';
+const entryFile = 'src/anvil-menu.ts';
+
 const configs = [
   {
     name: 'AnvilMenu',
@@ -13,29 +13,29 @@ const configs = [
     fileName: 'anvil-menu',
     fileExt: '.js',
     plugins: [
-      babel({
-        babelrc: false,
-        presets: {
-          presets: [
-            [
-              'env',
-              {
-                modules: false
-              }
-            ]
-          ],
-          plugins: ['external-helpers']
-        }
+      typescript({
+        clean: true,
+        target: 'es5',
       }),
-      terser()
-    ]
+      // terser()
+    ],
   },
   {
     format: 'es',
     fileName: 'anvil-menu',
     fileExt: '.mjs',
-    plugins: [terser()]
-  }
+    plugins: [
+      typescript({
+        clean: true,
+        tsconfigOverride: {
+          compilerOptions: {
+            target: 'ES2015',
+          },
+        },
+      }),
+      // terser()
+    ],
+  },
 ];
 
 configs.forEach(config =>
@@ -43,14 +43,15 @@ configs.forEach(config =>
     .then(() =>
       rollup.rollup({
         input: entryFile,
-        plugins: config.plugins
+        plugins: config.plugins,
       })
     )
     .then(bundle =>
       bundle.write({
         name: config.name,
         file: `dist/${config.fileName}${config.fileExt}`,
-        format: config.format
+        format: config.format,
+        sourcemap: true,
       })
     )
     .catch(err => console.log(err))

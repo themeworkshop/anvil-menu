@@ -1,0 +1,13 @@
+{
+  "rootDir": "./",
+  "exclude": ["node_modules", "**/*.spec.ts"],
+  "compilerOptions": {
+    "module": "ES2015",
+    "noImplicitAny": true,
+    "removeComments": true,
+    "preserveConstEnums": true,
+    "target": "es5",
+    "declaration": true,
+    "sourceMap": true
+  }
+}
